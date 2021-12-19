@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://s632533290.github.io/chulibrary.github.io/</id>
     <title>Gridea</title>
-    <updated>2021-12-19T14:57:18.578Z</updated>
+    <updated>2021-12-19T15:00:09.422Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://s632533290.github.io/chulibrary.github.io/"/>
     <link rel="self" href="https://s632533290.github.io/chulibrary.github.io/atom.xml"/>
@@ -10,6 +10,82 @@
     <logo>https://s632533290.github.io/chulibrary.github.io/images/avatar.png</logo>
     <icon>https://s632533290.github.io/chulibrary.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[TextField键盘点击View空白处关闭]]></title>
+        <id>https://s632533290.github.io/chulibrary.github.io/post/textfield-jian-pan-dian-ji-view-kong-bai-chu-guan-bi/</id>
+        <link href="https://s632533290.github.io/chulibrary.github.io/post/textfield-jian-pan-dian-ji-view-kong-bai-chu-guan-bi/">
+        </link>
+        <updated>2021-12-19T14:57:43.000Z</updated>
+        <summary type="html"><![CDATA[<p><em>视图内新增</em></p>
+<pre><code>public extension View {
+    func dismissKeyboardOnTap() -&gt; some View {
+        modifier(DismissKeyboardOnTap())
+    }
+}
+
+
+public struct DismissKeyboardOnTap: ViewModifier {
+    public func body(content: Content) -&gt; some View {
+        #if os(macOS)
+        return content
+        #else
+        return content.gesture(tapGesture)
+        #endif
+    }
+
+    private var tapGesture: some Gesture {
+        TapGesture().onEnded(endEditing)
+    }
+
+    private func endEditing() {
+        UIApplication.shared.connectedScenes
+            .filter {$0.activationState == .foregroundActive}
+            .map {$0 as? UIWindowScene}
+            .compactMap({$0})
+            .first?.windows
+            .filter {$0.isKeyWindow}
+            .first?.endEditing(true)
+   }
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p><em>视图内新增</em></p>
+<pre><code>public extension View {
+    func dismissKeyboardOnTap() -&gt; some View {
+        modifier(DismissKeyboardOnTap())
+    }
+}
+
+
+public struct DismissKeyboardOnTap: ViewModifier {
+    public func body(content: Content) -&gt; some View {
+        #if os(macOS)
+        return content
+        #else
+        return content.gesture(tapGesture)
+        #endif
+    }
+
+    private var tapGesture: some Gesture {
+        TapGesture().onEnded(endEditing)
+    }
+
+    private func endEditing() {
+        UIApplication.shared.connectedScenes
+            .filter {$0.activationState == .foregroundActive}
+            .map {$0 as? UIWindowScene}
+            .compactMap({$0})
+            .first?.windows
+            .filter {$0.isKeyWindow}
+            .first?.endEditing(true)
+   }
+</code></pre>
+<!-- more -->
+<p><em>用法</em></p>
+<pre><code>backgroundView()
+	.dismissKeyboardOnTap()
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://s632533290.github.io/chulibrary.github.io/post/hello-gridea/</id>
